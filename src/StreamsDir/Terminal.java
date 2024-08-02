@@ -37,6 +37,9 @@ public class Terminal {
         Arrays.asList(new Terminal(25, "A"), new Terminal(24, "B"), new Terminal(23, "C")).stream()
                 .sorted((i, j) -> i.a - j.a)
                 .forEach((ele) -> System.out.println(": " + ele));
+        Arrays.asList(new Terminal(25, "A"), new Terminal(24, "B"), new Terminal(23, "C")).stream()
+                .sorted(Comparator.comparing(ele -> ele.a))
+                .forEach((ele) -> System.out.println(": " + ele));
 
         // Map and Flat map
         list.stream().map(ele -> ele * ele * ele).forEach(System.out::println);
