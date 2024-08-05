@@ -61,9 +61,13 @@ public class Questions {
 
                 System.out.println(list.stream().mapToInt(ele -> ele).summaryStatistics().getAverage());
                 System.out.println(list.stream().mapToInt(ele -> ele).summaryStatistics().getMin());
+                System.out.println(list.stream().min((a, b) -> a - b).get());
                 System.out.println(list.stream().mapToInt(ele -> ele).summaryStatistics().getMax());
+                System.out.println(list.stream().min((a, b) -> b - a).get());
                 System.out.println(list.stream().mapToInt(ele -> ele).summaryStatistics().getCount());
+                System.out.println(list.stream().count());
                 System.out.println(list.stream().mapToInt(ele -> ele).summaryStatistics().getSum());
+                System.out.println(list.stream().reduce(0, (a, b) -> a + b));
 
                 // Count occurrence of a given character in a string
                 String str = "aaa";

@@ -1,8 +1,6 @@
 package StreamsDir;
 
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.function.Function;
 import java.util.stream.*;
 
