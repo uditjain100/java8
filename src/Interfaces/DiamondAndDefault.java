@@ -20,6 +20,7 @@ interface Cat {
 }
 
 class Pet implements Dog, Cat {
+    @Override
     public void speak() {
         Dog.super.speak();
     }
