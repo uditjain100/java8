@@ -246,5 +246,24 @@ public class Questions {
                 });
                 System.out.println(Arrays.toString(ans));
 
+                // is Prime
+                int len = 37;
+                System.out.println("Is Prime : "
+                                + (IntStream.rangeClosed(2, (int) Math.sqrt(len)).anyMatch(i -> (len % i) == 0) ? false
+                                                : true));
+
+                // print first count number of primes
+                int count = 10;
+                System.out.println(Stream.iterate(1, i -> i + 1)
+                                .filter(i -> i == 1 ? false
+                                                : i == 2 ? true
+                                                                : IntStream.rangeClosed(2, (int) Math.sqrt(i))
+                                                                                .noneMatch(num -> i % num == 0))
+                                .limit(count).collect(Collectors.toList()));
+
+                String str2 = "Welcome to Kolkata and Kolkata welcome you";
+                System.out.println(Arrays.stream(str2.split(" "))
+                                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+
         }
 }
