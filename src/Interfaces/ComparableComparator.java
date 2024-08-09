@@ -9,37 +9,36 @@ public class ComparableComparator {
         employees.add(new Employee("E", 80, 500));
         employees.add(new Employee("B", 20, 200000000));
 
+        // Using Comparable
         Collections.sort(employees);
         System.out.println(employees);
 
+        // Using Comparator
+
+        // Method - 1 - Explicit Class
         Collections.sort(employees, new EmployeeNameComparator());
         System.out.println(employees);
-        Collections.sort(employees, new EmployeeAgeComparator());
-        System.out.println(employees);
-        Collections.sort(employees, new EmployeeSalaryComparator());
+
+        // Method - 2 - Anonymous Class
+        Comparator<Employee> employeeAgeComparator = new Comparator<>() {
+            @Override
+            public int compare(Employee e1, Employee e2) {
+                return e1.getAge() - e2.getAge();
+            }
+        };
+        Collections.sort(employees, employeeAgeComparator);
         System.out.println(employees);
 
+        // Method - 3 - Lambda Expression
+        Collections.sort(employees, (e1, e2) -> e1.getSalary() - e2.getSalary());
+        System.out.println(employees);
     }
 }
 
 class EmployeeNameComparator implements Comparator<Employee> {
     @Override
     public int compare(Employee e1, Employee e2) {
-        return ((Employee) e1).getName().compareTo(((Employee) e2).getName());
-    }
-}
-
-class EmployeeAgeComparator implements Comparator<Employee> {
-    @Override
-    public int compare(Employee e1, Employee e2) {
-        return ((Employee) e1).getAge() - ((Employee) e2).getAge();
-    }
-}
-
-class EmployeeSalaryComparator implements Comparator<Employee> {
-    @Override
-    public int compare(Employee e1, Employee e2) {
-        return ((Employee) e1).getSalary() - ((Employee) e2).getSalary();
+        return e1.getName().compareTo(e2.getName());
     }
 }
 
