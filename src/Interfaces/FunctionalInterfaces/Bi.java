@@ -1,9 +1,12 @@
 package Interfaces.FunctionalInterfaces;
 
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.*;
+import java.util.function.BiPredicate;
 
 public class Bi {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         // Bi-function
         Map<String, Integer> emplMap = new HashMap<>();
         emplMap.put("John", 30);
@@ -15,7 +18,11 @@ public class Bi {
         emplMap.forEach((key, value) -> System.out.println(key + ", " + value));
 
         // Bi-predicate
-        // emplMap.entrySet().stream().filter((key, value) -> key.equals("John") &&
-        // value == 35).collect(Collectors.toList());
+        Path directory = Paths.get("C:\\Users\\ccs\\Documents\\java8\\src");
+        BiPredicate<Path, BasicFileAttributes> matcher = (path, attrs) -> attrs.isRegularFile()
+                && path.toString().endsWith(".txt");
+
+        Files.find(directory, 10, matcher)
+                .forEach(System.out::println);
     }
 }

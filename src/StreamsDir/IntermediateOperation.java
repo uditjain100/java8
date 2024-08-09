@@ -76,16 +76,23 @@ public class IntermediateOperation {
                                 .forEach(System.out::print);
                 System.out.println();
 
-                // // 6. distinct
+                // 6. distinct
                 System.out.println(list.stream().distinct().collect(Collectors.toList()));
 
-                // 7. Limit
+                // 7. Limit and Skip
+                // 7.a. limit
                 System.out.println(list.stream().limit(3).collect(Collectors.toList()));
 
-                // 8. Skip
+                // 7.b skip
                 System.out.println(list.stream().skip(3).collect(Collectors.toList()));
 
-                // 9. Concat
+                // 7.c skip + limit -> slice of a stream
+                System.out.println(list.stream().skip(1).limit(2).collect(Collectors.toList()));
+                System.out.println(list.stream()
+                                .collect(Collectors.collectingAndThen(Collectors.toList(),
+                                                l -> l.stream().skip(1).limit(2))));
+
+                // 8. Concat
                 System.out.println(Stream.concat(list.stream(),
                                 Arrays.stream(arr)).collect(Collectors.toList()));
                 System.out.println(Stream.concat(list.stream(),
@@ -93,10 +100,10 @@ public class IntermediateOperation {
                                                 Arrays.stream(arr)))
                                 .collect(Collectors.toList()));
 
-                // 10. drop while
+                // 9. drop while
                 System.out.println(list.stream().dropWhile(ele -> ele > 5).collect(Collectors.toList()));
 
-                // 11. take while
+                // 10. take while
                 System.out.println(list.stream().takeWhile(ele -> ele > 5).collect(Collectors.toList()));
 
         }
