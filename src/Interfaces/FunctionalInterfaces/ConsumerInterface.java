@@ -21,5 +21,16 @@ public class ConsumerInterface {
         biConsumer2.accept(25, "A");
         biConsumer1.andThen(biConsumer2).accept(25, "A");
         biConsumer2.andThen(biConsumer1).accept(25, "A");
+
+        IntConsumer intConsumer1 = num -> System.out.println("Integer 1 consumer : " + num);
+        IntConsumer intConsumer2 = num -> System.out.println("Integer 2 consumer : " + num * 2);
+
+        intConsumer1.accept(30);
+        intConsumer2.accept(30);
+        intConsumer1.andThen(intConsumer2).accept(30);
+        intConsumer2.andThen(intConsumer1).accept(30);
+
+        DoubleConsumer doubleConsumer = num -> System.out.println("Double consumer : " + num);
+        LongConsumer longConsumer = num -> System.out.println("Long consumer : " + num);
     }
 }
