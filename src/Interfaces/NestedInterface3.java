@@ -1,8 +1,6 @@
 package Interfaces;
 
-import Interfaces.Outer.Inner;
-
-public class NestedInterface {
+public class NestedInterface3 {
     public static void main(String[] args) {
 
         Outer outer = new OuterClass();
@@ -15,19 +13,18 @@ public class NestedInterface {
         Outer.fun6();
         // outer.fun6(); // not allowed
 
-        Inner inner = new InnerClass();
+        Outer.Inner inner = new Outer.Inner();
         inner.fun1();
         inner.fun2();
-        // inner.fun3();
+        // inner.fun3(); // allowed but should not be doing that
         Outer.Inner.fun3();
         // inner.fun4(); // not part of nested interface
         // inner.fun5(); // not part of nested interface
         // inner.fun6(); // not part of nested interface
         // Outer.Inner.fun6(); // not part of nested interface
         inner.fun7();
-        inner.fun8();
-        // inner.fun9();
-        Outer.Inner.fun9();
+        // inner.fun8(); // allowed but should not be doing that
+        Outer.Inner.fun8();
 
         inner.tester();
 
@@ -59,14 +56,21 @@ interface Outer {
         System.out.println("Outer fun6 called");
     }
 
-    // Implicitly static and can't be private
-    interface Inner {
+    // implicitly static and can only be public
+    class Inner {
 
-        int a = 20;
+        int a;
 
-        void fun1();
+        public Inner() {
+            System.out.println("Inner Constructor Called .......................");
+            this.a = 30;
+        }
 
-        default void fun2() {
+        void fun1() {
+            System.out.println("Inner fun1 called");
+        }
+
+        public void fun2() {
             fun1(); // Important
             System.out.println("Inner fun2 called");
         }
@@ -75,20 +79,17 @@ interface Outer {
             System.out.println("Inner fun3 called");
         }
 
-        void fun7();
+        public void fun7() {
+            System.out.println("Inner fun7 called");
+        }
 
-        default void fun8() {
+        static void fun8() {
             System.out.println("Inner fun8 called");
         }
 
-        static void fun9() {
-            System.out.println("Inner fun9 called");
-        }
-
-        default void tester() {
+        public void tester() {
             System.out.println(a);
             System.out.println(Outer.a);
-            System.out.println(Inner.a);
 
             fun1();
             fun2();
@@ -98,7 +99,6 @@ interface Outer {
             // fun6(); // not visible
             fun7();
             fun8();
-            fun9();
 
             Outer outer = new Outer() {
                 @Override
@@ -115,7 +115,7 @@ interface Outer {
             outer.fun1();
             outer.fun2();
             Outer.fun3();
-            // outer.fun3(); not allowed
+            // outer.fun3(); // not allowed
             outer.fun4();
             outer.fun5();
             Outer.fun6();
@@ -134,18 +134,5 @@ class OuterClass implements Outer {
 
     public void fun4() {
         System.out.println("OuterClass fun4 called");
-    }
-}
-
-class InnerClass implements Outer.Inner {
-
-    @Override
-    public void fun1() {
-        System.out.println("InnerClass fun1 called");
-    }
-
-    @Override
-    public void fun7() {
-        System.out.println("InnerClass fun7 called");
     }
 }
