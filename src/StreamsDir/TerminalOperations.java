@@ -10,18 +10,26 @@ public class TerminalOperations {
         int[] arr = new int[] { 5, 4, 2, 3, 4, 5, 6, 8 };
 
         // 1. collect
+        // 1.a. Collectors
+        // 1.a.1 toList, toSet, toMap
         System.out.println(list.stream().filter(ele -> ele > 4).collect(Collectors.toList()));
         System.out.println(list.stream().filter(ele -> ele > 4).collect(Collectors.toSet()));
         System.out.println(Arrays.asList(1, 2, 3, 4, 5).stream().filter(ele -> ele > 4)
                 .collect(Collectors.toMap(Function.identity(), ele -> "" + ele)));
 
-        // 1.a. Collectors
-
-        // joining method
+        // 1.a.2 joining method
         String[] strArr = new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
         System.out.println(Arrays.stream(strArr).collect(Collectors.joining()));
         System.out.println(Arrays.stream(strArr).collect(Collectors.joining(", ")));
         System.out.println(Arrays.stream(strArr).collect(Collectors.joining(", ", "[", "]")));
+
+        // 1.a.3 counting
+        System.out.println(list.stream().collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
+
+        // 1.a.4 summarizingDouble, summarizingLong, summarizingInt
+        // 1.a.5 averagingDouble, averagingLong, averagingInt
+        // 1.a.6 groupingBy
+        // 1.a.7 partitionBy
 
         // 2. forEach
         list.parallelStream().forEach(System.out::print); // not guarantee ordering

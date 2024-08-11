@@ -7,14 +7,48 @@ public class Main {
     public static void main(String[] args) {
         // Method Reference
         List<Student> students = Arrays.asList(new Student("A", 1, 1), new Student("B", 1, 2), new Student("C", 1, 3));
-        // Static
-        students.stream().map(st -> st.getDetails()).forEach(System.out::println);
-        // Non - Static
-        students.stream().map(Student::getName).forEach(System.out::println);
-        // Constructor
-        students.stream().map(Student::getId).map(ArrayList::new).forEach(System.out::println);
-        students.stream().map(Student::getId).collect(Collectors.toList()).forEach(System.out::println);
+        // Static Reference
+        Collections.sort(students, ComparisonProvider::compareByName); // (a, b) -> ComparisonProvider.compareByName(a,
+                                                                       // b)
+        System.out.println(students);
+        // Non - Static Reference
+        Collections.sort(students, new ComparisonProvider()::compareByAge); // (a, b) -> new
+                                                                            // ComparisonProvider().compareByAge(a, b)
+        System.out.println(students);
+        // Non - Static Reference of arbitrary object of particular type
+        students.stream().map(Student::getId).collect(Collectors.toList()).forEach(System.out::print); // ele ->
+                                                                                                       // ele.getId()
+        System.out.println();
+        // Constructor Reference
+        Functional functional = FunctionalClass::new; // new FunctionalClass();
+        functional.execute();
     }
+}
+
+interface Functional {
+    void execute();
+}
+
+class FunctionalClass {
+    FunctionalClass() {
+        System.out.println("FunctionalClass execute method called");
+    }
+}
+
+class ComparisonProvider {
+
+    public int compareByAge(Student s1, Student s2) {
+        return s1.getAge() - s2.getAge();
+    }
+
+    public static int compareByName(Student s1, Student s2) {
+        return s1.getName().compareTo(s2.getName());
+    }
+
+    public static int compareById(Student s1, Student s2) {
+        return s1.getId() - s2.getId();
+    }
+
 }
 
 class Student {
@@ -34,14 +68,6 @@ class Student {
         this.id = id;
     }
 
-    public String getDetails() {
-        return "Student Details : " + this.name + " " + this.age + " " + this.id;
-    }
-
-    public static void printDetails() {
-        System.out.println("Student Details");
-    }
-
     public String getName() {
         return name;
     }
@@ -52,5 +78,14 @@ class Student {
 
     public Integer getAge() {
         return this.age;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", id=" + id +
+                '}';
     }
 }
