@@ -7,6 +7,33 @@ import java.util.stream.*;
 
 public class StreamsIntro {
         public static void main(String[] args) throws Exception, IOException {
+                // Parallel Stream
+                List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5));
+                list.parallelStream().forEach(System.out::print); // not guarantee ordering
+                System.out.println();
+                list.parallelStream().forEachOrdered(System.out::print); // for ordered printing
+                System.out.println();
+
+                // Stream Builder
+                System.out.println(Stream.<String>builder().add("20").add("200").build().collect(Collectors.toList()));
+                Stream.<String>builder().add("50").andThen(ele -> System.out.println(ele)).accept("82");
+
+                // Stream Support - LongStream / IntStream / DoubleStream
+                LongStream longStream = LongStream.of(10);
+                System.out.println(longStream);
+                System.out.println(LongStream.of(1, 2, 3, 4, 5, 6, 7, 8));
+                System.out.println(LongStream.empty()); // Returns an empty sequential LongStream
+                System.out.println(LongStream.range(1, 10));
+                System.out.println(LongStream.rangeClosed(1, 10));
+                System.out.println(LongStream.builder().add(10).add(20).build());
+                System.out.println(LongStream.concat(LongStream.of(10), LongStream.of(20, 30, 40)));
+                System.out.println(LongStream.iterate(0, i -> i + 1).limit(10));
+                System.out.println(LongStream.iterate(0, i -> i < 10, i -> i + 1));
+                System.out.println(LongStream.generate(() -> (long) Math.random()).limit(50));
+
+                IntStream intStream = IntStream.of(1, 2, 44, 555);
+                DoubleStream doubleStream = DoubleStream.of(10.0); // No range or rangeClosed method
+
                 // Stream Creation
                 Stream<Integer> stream0 = Stream.empty();
                 Stream<Object> stream1 = Stream.builder().add(1).add(2).add(55).build();
@@ -35,33 +62,6 @@ public class StreamsIntro {
                                                 Spliterator.NONNULL),
                                 false);
                 Stream<Integer> stream13 = StreamSupport.stream(Arrays.asList(1, 2, 3).spliterator(), false);
-
-                // Parallel Stream
-                List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5));
-                list.parallelStream().forEach(System.out::println); // not guarantee ordering
-                list.parallelStream().forEachOrdered(System.out::println); // for ordered printing
-
-                // File Operations on stream
-                Stream<String> lines = Files
-                                .lines(Paths.get("C://Users//ccs//Documents//java8//src//StreamsDir//File.txt"));
-                List<String> list2 = lines.map((str) -> str.toUpperCase()).collect(Collectors.toList());
-
-                list2.forEach((str) -> System.out.println(str));
-
-                // PrintWriter pw = new PrintWriter(
-                // Files.newBufferedWriter(Paths
-                // .get("C://Users//ccs//Documents//java8//src//StreamsDir//File.txt")));
-
-                // Stream.ofNullable(list2).forEach((str) -> System.out.println(str));
-                // Stream.ofNullable(list2).forEach(pw::println);
-                lines.close();
-
-                // Read all data from the file except header and footer
-                System.out.println(".............................");
-                List<String> data = Files
-                                .readAllLines(Paths.get("C://Users//ccs//Documents//java8//src//StreamsDir//File.txt"));
-                data.stream().skip(1).limit(data.size() - 2).forEach(System.out::println);
-                System.out.println(".............................");
 
                 // Iterating over a stream
                 Stream<Integer> st = new ArrayList<>(Arrays.asList(25, 26, 27, 28)).stream();

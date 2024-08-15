@@ -1,11 +1,13 @@
 package StreamsDir;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.*;
 
 public class Questions {
-        public static void main(String[] args) {
+        public static void main(String[] args) throws Exception {
                 // Array to Stream
                 int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
                 System.out.println(Arrays.stream(arr));
@@ -272,6 +274,27 @@ public class Questions {
                 System.out.println(Arrays.stream(str2.split(" "))
                                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting())));
 
+                // File Operations on stream
+                Stream<String> lines = Files
+                                .lines(Paths.get("C://Users//ccs//Documents//java8//src//StreamsDir//File.txt"));
+                List<String> list2 = lines.map((str) -> str.toUpperCase()).collect(Collectors.toList());
+
+                list2.forEach((str) -> System.out.println(str));
+
+                // PrintWriter pw = new PrintWriter(
+                // Files.newBufferedWriter(Paths
+                // .get("C://Users//ccs//Documents//java8//src//StreamsDir//File.txt")));
+
+                // Stream.ofNullable(list2).forEach((str) -> System.out.println(str));
+                // Stream.ofNullable(list2).forEach(pw::println);
+                lines.close();
+
+                // Read all data from the file except header and footer
+                System.out.println(".............................");
+                List<String> data = Files
+                                .readAllLines(Paths.get("C://Users//ccs//Documents//java8//src//StreamsDir//File.txt"));
+                data.stream().skip(1).limit(data.size() - 2).forEach(System.out::println);
+                System.out.println(".............................");
         }
 }
 

@@ -7,7 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class IntermediateOperation {
         public static void main(String[] args) {
                 String[] arr = { "a0", "a1", "a2", "a3", "a4", "a5", "a6", "b1", "b2", "b3", "b4" };
-                List<Integer> list = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5));
+                List<Integer> list = new ArrayList<>(
+                                Arrays.asList(8, 7, 6, 5, 4, 3, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5));
 
                 // 1. Filter
                 // 1.a. Filter by Object Properties
